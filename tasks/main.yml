@@ -1,2 +1,25 @@
 ---
 # Role tasks
+- name: version
+  debug: msg {{ ansible_distribution }}
+
+- name: Configure sshd_config file
+  template:
+    backup: yes
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart sshd with systemd
+  systemd:
+    name: sshd.service
+    enabled: yes
+    state: restarted
+
+- name: Restart sshd daemon
+  service:
+    named: sshd.service
+    enabled: yes
+    state: restarted

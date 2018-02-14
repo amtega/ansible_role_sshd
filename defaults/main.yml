@@ -1,2 +1,29 @@
 ---
 # Role default lower priority variables
+
+# avoid root login through SSH
+permit_root_login: no
+# force SSH version 2
+protocol: 2
+# avoid port forwarding a X11 forwarding
+allow_tcp_forwarding: no
+x11_forwarding: no
+# number of max failed tries to make SSH
+max_auth_tries: 3
+# max time between login fails in seconds
+login_grace_time: 60
+# ignore users rhosts and shosts
+ignore_rhost_file: yes
+host_based_authentication: no
+# permited cipher algorithms and Message Authentication Codes
+ciphers_permited: "aes256-ctr,aes192-ctr,aes128-ctr"
+macs_pertmited: "hmac-sha2-512,hmac-sha2-256"
+# log level type
+log_level_type: INFO
+# permited users and groups to make login through SSH
+allowed_users:
+allowed_groups:
+denied_users:
+denied_groups:
+# address through which allow login SSH
+listen_address:
