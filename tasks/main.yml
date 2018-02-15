@@ -1,8 +1,5 @@
 ---
 # Role tasks
-- name: version
-  debug: msg {{ ansible_distribution }}
-
 - name: Configure sshd_config file
   template:
     backup: yes
