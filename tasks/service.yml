@@ -1,0 +1,12 @@
+---
+- name: restart sshd with systemd
+  systemd:
+    name: sshd.service
+    enabled: yes
+    state: restarted
+
+- name: restart sshd daemon
+  service:
+    named: sshd.service
+    enabled: yes
+    state: restarted

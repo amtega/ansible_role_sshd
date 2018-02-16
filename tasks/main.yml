@@ -1,22 +1,18 @@
 ---
 # Role tasks
-- name: Configure sshd_config file
-  template:
-    backup: yes
-    src: sshd_config.j2
-    dest: /etc/ssh/sshd_config
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
+- name: install ssh daemon
+  import_tasks: install.yml
+  tags:
+    - role::sshd
+    - role::sshd::install
 
-- name: Restart sshd with systemd
-  systemd:
-    name: sshd.service
-    enabled: yes
-    state: restarted
+- name: configure sshd_config file
+  import_tasks: configure.yml
+  tags:
+    - role::sshd
 
-- name: Restart sshd daemon
-  service:
-    named: sshd.service
-    enabled: yes
-    state: restarted
+- name: restart sshd service
+  import_tasks: service.yml
+  tags:
+    - role::sshd
+    - role::sshd:service

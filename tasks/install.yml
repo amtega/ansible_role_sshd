@@ -1,0 +1,6 @@
+---
+- name: install sshd daemon
+  package:
+    name: openssh
+    state: present
+    
