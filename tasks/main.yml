@@ -1,2 +1,18 @@
 ---
 # Role tasks
+- name: install ssh daemon
+  import_tasks: install.yml
+  tags:
+    - role::sshd
+    - role::sshd::install
+
+- name: configure sshd_config file
+  import_tasks: configure.yml
+  tags:
+    - role::sshd
+
+- name: restart sshd service
+  import_tasks: service.yml
+  tags:
+    - role::sshd
+    - role::sshd:service

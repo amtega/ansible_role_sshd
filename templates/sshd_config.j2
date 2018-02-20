@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+PermitRootLogin {{ permit_root_login }}
+Protocol {{ protocol }}
+AllowTcpForwarding {{ allow_tcp_forwarding }}
+X11Forwarding {{ x11_forwarding }}
+MaxAuthTries {{ max_auth_tries }}
+LoginGraceTime {{ login_grace_time }}
+IgnoreRhost {{ ignore_rhost_file }}
+HostbasedAuthenticacion {{ host_based_authentication }}
+Ciphers {{ ciphers_permited }}
+MACs {{ macs_pertmited }}
+LogLevel {{ log_level_type }}
+AllowUsers {{ allowed_users }}
+AllowGroups {{ allowed_groups }}
+DenyUsers {{ denied_users }}
+DenyGroups {{ denied_groups }}
+ListenAddress {{ listen_address }}
