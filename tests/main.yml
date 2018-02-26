@@ -1,7 +1,69 @@
 ---
 # Tasks for tesing role
-- name: configure sshd_config
-  become: true
-  hosts: testservers
+- name: run idempotence test
+  hosts: localhost
   roles:
-    - role: amtega.sshd
+    - role: amtega.docker_presets
+    - role: amtega.docker_sandbox
+      docker_sandbox_state: started
+
+- name: test sshd role
+  hosts: docker_sandbox_containers
+  roles:
+    - amtega.sshd
+  vars:
+    permit_root_login: "no"
+    protocol: 2
+    allow_tcp_forwarding: "no"
+    x11_forwarding: "no"
+    max_auth_tries: 3
+    login_grace_time: 60
+    ignore_rhost_file: "yes"
+    host_based_authentication: "no"
+    ciphers_permited: "aes256-ctr,aes192-ctr,aes128-ctr"
+    macs_pertmited: "hmac-sha2-512,hmac-sha2-256"
+    log_level_type: INFO
+    allowed_users:  admin
+    allowed_groups: admin
+    denied_users:
+    denied_groups:
+    listen_address: 0.0.0.0
+    address_family: inet
+
+  tasks:
+      - name: read sshd config file
+        shell: "cat /etc/ssh/sshd_config"
+        changed_when: false
+        register: read_sshd_config_result
+
+      - name: verify that sshd_config config matches inventory
+        assert:
+          that:
+            - stdout | search("PermitRootLogin no")
+            - stdout | search("Protocol 2")
+            - stdout | search("AllowTcpForwarding no")
+            - stdout | search("X11Forwarding no")
+            - stdout | search("MaxAuthTries 3")
+            - stdout | search("LoginGraceTime 60")
+            - stdout | search("IgnoreRhosts yes")
+            - stdout | search("HostbasedAuthentication no")
+            - stdout | search("Ciphers aes256-ctr,aes192-ctr,aes128-ctr")
+            - stdout | search("MACs hmac-sha2-512,hmac-sha2-256")
+            - stdout | search("LogLevel INFO")
+            - stdout | search("AllowUsers admin")
+            - stdout | search("AllowGroups admin")
+            - stdout | search("DenyUsers")
+            - stdout | search("DenyGroups")
+            - stdout | search("AddressFamily inet")
+            - stdout | search ("ListenAddress 0.0.0.0")
+        vars:
+          stdout: "{{ read_sshd_config_result.stdout }}"
+
+  tags:
+    - idempotence
+
+- name: cleanup docker docker sandbox
+  hosts: localhost
+  roles:
+    - role: amtega.docker_sandbox
+      docker_sandbox_state: absent

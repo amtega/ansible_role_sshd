@@ -1,6 +1,12 @@
 ---
-- name: install sshd daemon
+- name: install sshd daemon for CentOS
   package:
     name: openssh
     state: present
-    
+  when: ansible_distribution == "CentOS"
+
+- name: install sshd daemon for Fedora
+  package:
+    name: apache-sshd
+    state: present
+  when: ansible_distribution == "Fedora"
