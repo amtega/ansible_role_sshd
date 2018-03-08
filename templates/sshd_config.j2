@@ -1,20 +1,103 @@
 {{ ansible_managed | comment }}
 
-PermitRootLogin {{ permit_root_login }}
-Protocol {{ protocol }}
-AllowTcpForwarding {{ allow_tcp_forwarding }}
-X11Forwarding {{ x11_forwarding }}
-MaxAuthTries {{ max_auth_tries }}
-LoginGraceTime {{ login_grace_time }}
-IgnoreRhosts {{ ignore_rhost_file }}
+Protocol {{ sshd_protocol_version }}
+
+Port {{ sshd_port }}
+AddressFamily {{ sshd_address_family }}
+{% for address in sshd_listen_addresses %}
+ListenAddress {{ address }}
+{% endfor %}
+TCPKeepAlive {{ sshd_tcp_keep_alive }}
+ClientAliveInterval {{ sshd_client_alive_interval }}
+ClientAliveCountMax {{ sshd_client_alive_count_max }}
+Compression {{ sshd_compression }}
+UseDNS {{ sshd_use_dns }}
+
+Banner {{ sshd_banner }}
+PrintMotd {{ sshd_print_motd }}
+PrintLastLog {{ sshd_print_last_log }}
+VersionAddendum {{ sshd_version_addendum }}
+ShowPatchLevel {{ sshd_show_patch_level }}
+
+{% for hostkey_files in sshd_hostkey_files %}
+HostKey {{ hostkey_file }}
+{% endfor %}
+
+RekeyLimit {{ sshd_rekey_limit }}
+
+SyslogFacility {{ sshd_syslog_facility}}
+LogLevel {{ sshd_log_level_type }}
+
+LoginGraceTime {{ sshd_login_grace_time }}
+PermitRootLogin {{ sshd_permit_root_login }}
+StrictModes {{ sshd_strict_modes }}
+MaxAuthTries {{ sshd_max_auth_tries }}
+MaxSessions {{ sshd_max_sessions }}
+PubkeyAuthentication {{ sshd_pubkey_authentication }}
+AuthorizedKeysFile {{ sshd_authorized_keys_file }}
+
+AuthorizedPrincipalsFile {{ sshd_authorized_principals_file }}
+AuthorizedKeysCommand {{ sshd_authorized_keys_command }}
+AuthorizedKeysCommandUser {{ sshd_authorized_keys_command_user }}
+
 HostbasedAuthentication {{ host_based_authentication }}
-Ciphers {{ ciphers_permited }}
-MACs {{ macs_pertmited }}
-LogLevel {{ log_level_type }}
-AllowUsers {{ allowed_users }}
-AllowGroups {{ allowed_groups }}
-DenyUsers {{ denied_users }}
-DenyGroups {{ denied_groups }}
-AddressFamily {{ address_family }}
-ListenAddress {{ listen_address }}
-Banner /etc/issue.net
+
+IgnoreUserKnownHosts {{ sshd_ignore_known_hosts }}
+IgnoreRhosts {{ sshd_ignore_rhosts_file }}
+
+PermitEmptyPasswords {{ sshd_permit_empty_passwords }}
+PasswordAuthentication {{ sshd_password_authentication }}
+
+ChallengeResponseAuthentication {{ sshd_challenge_response_authentication }}
+
+KerberosAuthentication {{ sshd_kerberos_authentication }}
+KerberosOrLocalPasswd {{ sshd_kerberos_or_local_passwd }}
+KerberosTicketCleanup {{ sshd_kerberos_ticket_cleanup }}
+KerberosGetAFSToken {{ sshd_kerberos_get_afs_token }}
+KerberosUseKuserok {{ sshd_kerberos_use_k_user_ok }}
+
+GSSAPIAuthentication {{ sshd_gssapi_authentication }}
+GSSAPICleanupCredentials {{ sshd_gssapi_cleanup_credentials }}
+GSSAPIStrictAcceptorCheck {{ sshd_gssapi_strict_accept_or_check }}
+GSSAPIKeyExchange {{ sshd_gssapi_key_exchange }}
+GSSAPIEnablek5users {{ sshd_gssapi_enable_k5_users }}
+
+UsePAM {{ sshd_use_pam }}
+
+AllowAgentForwarding {{ sshd_allow_agent_forwarding }}
+AllowTcpForwarding {{ sshd_allow_tcp_forwarding }}
+GatewayPorts {{ sshd_gateway_ports }}
+PermitTunnel {{ sshd_permit_tunnel }}
+
+X11Forwarding {{ sshd_x11_forwarding }}
+X11DisplayOffset {{ sshd_x11_display_offset }}
+X11UseLocalhost {{sshd_x11_use_local_host }}
+
+PermitTTY {{ sshd_permit_tty }}
+UseLogin {{ sshd_use_login }}
+PermitUserEnvironment {{ sshd_permit_user_environment }}
+ChrootDirectory {{ sshd_chroot_directory }}
+{%- if sshd_force_command is defined -%}ForceCommand {{ sshd_force_command }}{%- endif -%}
+
+PidFile {{ sshd_pid_file }}
+MaxStartups {{ sshd_max_startups }}
+
+{%- if sshd_ciphers | length >0 -%}Ciphers {{ sshd_ciphers | join(",") }}
+{%- if sshd_macs | length >0 -%}MACs {{ sshd_macs | join(",") }}
+
+{%- if sshd_allowed_users | length >0 -%}AllowUsers {{ sshd_allowed_users | join(" ") }}{%- endif -%}
+{%- if sshd_allowed_groups | length >0 -%}AllowGroups {{ sshd_allowed_groups | join(" ")}}{%- endif -%}
+
+{%- if sshd_denied_users  | length >0 -%}DenyUsers {{ sshd_denied_users | join(" ") }}{%- endif -%}
+{%- if sshd_denied_groups | length >0 -%}DenyGroups {{ sshd_denied_groups | join(" ") }}{%- endif -%}
+
+{%- if sshd_accept_env | length >0 -%}AcceptEnv {{ sshd_accept_env | join(" ") }}{%- endif -%}
+{% endfor %}
+
+{%for s in shd_subsytems %}
+Subsystem {{ e.name }} {{ e.command }}
+{% endfor %}
+
+{% for r in sshd_match_rules %}
+Include {{ sshd_conf_d_dir }}/{{ r.name }}
+{% endfor %}

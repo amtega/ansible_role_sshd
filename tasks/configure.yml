@@ -1,5 +1,7 @@
 ---
-- name: configure sshd_config file
+# Role configuration tasks
+
+- name: configure main sshd options
   template:
     backup: yes
     src: sshd_config.j2
@@ -7,3 +9,24 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+  notify: "reload sshd"
+
+- name: configure sshd match rules
+  template:
+    backup: yes
+    src: sshd_config.j2
+    dest: "{{ sshd_conf_d_dir }}/{{ rule.name }}"
+    owner: root
+    group: root
+    mode: "u=rw"
+  with_items: >-
+    sshd_match_rules | selectattr("state", "equaltol", "present") | list
+  notify: "reload sshd"
+
+- name: remove unnecessary sshd match rules
+  file:
+    path: "{{ sshd_conf_d_dir }}/{{ rule.name }}"
+    state: absent
+  with_items: >-
+    sshd_match_rules | selectattr("state", "equaltol", "absent") | list
+  notify: "reload sshd"

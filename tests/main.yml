@@ -12,24 +12,105 @@
   roles:
     - amtega.sshd
   vars:
-    permit_root_login: "no"
-    protocol: 2
-    allow_tcp_forwarding: "no"
-    x11_forwarding: "no"
-    max_auth_tries: 3
-    login_grace_time: 60
-    ignore_rhost_file: "yes"
-    host_based_authentication: "no"
-    ciphers_permited: "aes256-ctr,aes192-ctr,aes128-ctr"
-    macs_pertmited: "hmac-sha2-512,hmac-sha2-256"
-    log_level_type: INFO
-    allowed_users:  admin
-    allowed_groups: admin
-    denied_users:
-    denied_groups:
-    listen_address: 0.0.0.0
-    address_family: inet
-
+    sshd_protocol_version: 2
+    sshd_port: 22
+    sshd_address_family: "any"
+    sshd_listen_addresses:
+      - "0.0.0.0"
+      - "::"
+    sshd_tcp_keep_alive: "yes"
+    sshd_client_alive_interval: 0
+    sshd_client_alive_count_max: 3
+    sshd_compression: "delayed"
+    sshd_use_dns: "no"
+    sshd_banner: "/etc/issue.net"
+    sshd_print_motd: "yes"
+    sshd_print_last_log: "yes"
+    sshd_version_addendum: "none"
+    sshd_show_patch_level: "no"
+    sshd_hostkey_files:
+      - "/etc/ssh/ssh_host_rsa_key"
+      - "/etc/ssh/ssh_host_ecdsa_key"
+      - "/etc/ssh/ssh_host_ed25519_key"
+    sshd_rekey_limit: "default none"
+    sshd_syslog_facility: "AUTHPRIV"
+    sshd_log_level_type: "INFO"
+    sshd_login_grace_time: 60
+    sshd_permit_root_login: "yes"
+    sshd_strict_modes: "yes"
+    sshd_max_auth_tries: 3
+    sshd_max_sessions: 10
+    sshd_pubkey_authentication: "yes"
+    sshd_authorized_keys_file: ".ssh/authorized_keys"
+    sshd_authorized_principals_file: "none"
+    sshd_authorized_keys_command: "none"
+    sshd_authorized_keys_command_user: "nobody"
+    sshd_host_based_authentication: "no"
+    sshd_ignore_known_hosts: "no"
+    sshd_ignore_rhosts_file: "yes"
+    sshd_permit_empty_passwords: "no"
+    sshd_password_authentication: "yes"
+    sshd_challenge_response_authentication: "no"
+    sshd_kerberos_authentication: "no"
+    sshd_kerberos_or_local_passwd: "yes"
+    sshd_kerberos_ticket_cleanup: "yes"
+    sshd_kerberos_get_afs_token: "no"
+    sshd_kerberos_use_k_user_ok: "yes"
+    sshd_gssapi_authentication: "yes"
+    sshd_gssapi_cleanup_credentials: "no"
+    sshd_gssapi_strict_accept_or_check: "yes"
+    sshd_gssapi_key_exchange: "no"
+    sshd_gssapi_enable_k5_users: "no"
+    sshd_use_pam: "yes"
+    sshd_allow_agent_forwarding: "yes"
+    sshd_allow_tcp_forwarding: "no"
+    sshd_gateway_ports: "no"
+    sshd_permit_tunnel: "no"
+    sshd_x11_forwarding: "no"
+    sshd_x11_display_offset: 10
+    sshd_x11_use_local_host: "yes"
+    sshd_permit_tty: "yes"
+    sshd_use_login: "no"
+    sshd_permit_user_environment: "no"
+    sshd_chroot_directory: "none"
+    sshd_pid_file: "/var/run/sshd.pid"
+    sshd_max_startups: "10:30:100"
+    sshd_conf_d_dir: "/etc/ssh/sshd_config.d"
+    sshd_ciphers:
+      - "aes256-ctr"
+      - "aes192-ctr"
+      - "aes128-ctr"
+    sshd_macs:
+      - "hmac-sha2-512"
+      - "hmac-sha2-256"
+    sshd_allowed_users:
+      - root
+    sshd_allowed_groups:
+      - root
+      - users
+    sshd_denied_users:
+      - acme
+    sshd_denied_groups:
+      - acme
+    sshd_accept_env:
+      - "LANG"
+      - "LC_CTYPE"
+      - "LC_NUMERIC"
+      - "LC_TIME"
+      - "LC_COLLATE"
+      - "LC_MONETARY"
+      - "LC_MESSAGES"
+      - "LC_PAPER"
+      - "LC_NAME"
+      - "LC_ADDRESS"
+      - "LC_TELEPHONE"
+      - "LC_MEASUREMENT"
+      - "LC_IDENTIFICATION"
+      - "LC_ALL LANGUAGE"
+      - "XMODIFIERS"
+    sshd_subsystems:
+      - name: "sftp"
+        command: "/usr/libexec/openssh/sftp-server"
   tasks:
       - name: read sshd config file
         shell: "cat /etc/ssh/sshd_config"
@@ -39,28 +120,85 @@
       - name: verify that sshd_config config matches inventory
         assert:
           that:
-            - stdout | search("PermitRootLogin no")
-            - stdout | search("Protocol 2")
-            - stdout | search("AllowTcpForwarding no")
-            - stdout | search("X11Forwarding no")
-            - stdout | search("MaxAuthTries 3")
-            - stdout | search("LoginGraceTime 60")
-            - stdout | search("IgnoreRhosts yes")
-            - stdout | search("HostbasedAuthentication no")
-            - stdout | search("Ciphers aes256-ctr,aes192-ctr,aes128-ctr")
-            - stdout | search("MACs hmac-sha2-512,hmac-sha2-256")
-            - stdout | search("LogLevel INFO")
-            - stdout | search("AllowUsers admin")
-            - stdout | search("AllowGroups admin")
-            - stdout | search("DenyUsers")
-            - stdout | search("DenyGroups")
-            - stdout | search("AddressFamily inet")
-            - stdout | search ("ListenAddress 0.0.0.0")
+          - stdout | search("Protocol 2")
+          - stdout | search("Port 22")
+          - stdout | search("AddressFamily any")
+          - stdout | search("ListenAddress 0.0.0.0")
+          - stdout | search("ListenAddress ::")
+          - stdout | search("TCPKeepAlive yes")
+          - stdout | search("ClientAliveInterval 0")
+          - stdout | search("ClientAliveCountMax 3")
+          - stdout | search("Compression delayed")
+          - stdout | search("UseDNS no")
+          - stdout | search("Banner /etc/issue.net")
+          - stdout | search("PrintMotd yes")
+          - stdout | search("PrintLastLog yes")
+          - stdout | search("VersionAddendum none")
+          - stdout | search("ShowPatchLevel no")
+          - stdout | search("HostKey /etc/ssh/ssh_host_rsa_key")
+          - stdout | search("HostKey /etc/ssh/ssh_host_ecdsa_key")
+          - stdout | search("HostKey /etc/ssh/ssh_host_ed25519_key")
+          - stdout | search("RekeyLimit default none")
+          - stdout | search("SyslogFacility AUTHPRIV")
+          - stdout | search("LogLevel INFO")
+          - stdout | search("LoginGraceTime 60")
+          - stdout | search("PermitRootLogin yes")
+          - stdout | search("StrictModes yes")
+          - stdout | search("MaxAuthTries 3")
+          - stdout | search("MaxSessions 10")
+          - stdout | search("PubkeyAuthentication yes")
+          - stdout | search("AuthorizedKeysFile .ssh/authorized_keys")
+          - stdout | search("AuthorizedPrincipalsFile none")
+          - stdout | search("AuthorizedKeysCommand none")
+          - stdout | search("AuthorizedKeysCommandUser nobody")
+          - stdout | search("HostbasedAuthentication no")
+          - stdout | search("IgnoreUserKnownHosts no")
+          - stdout | search("IgnoreRhosts yes")
+          - stdout | search("PermitEmptyPasswords no")
+          - stdout | search("PasswordAuthentication yes")
+          - stdout | search("ChallengeResponseAuthentication no")
+          - stdout | search("KerberosAuthentication no")
+          - stdout | search("KerberosOrLocalPasswd yes")
+          - stdout | search("KerberosTicketCleanup yes")
+          - stdout | search("KerberosGetAFSToken no")
+          - stdout | search("KerberosUseKuserok yes")
+          - stdout | search("GSSAPIAuthentication yes")
+          - stdout | search("GSSAPICleanupCredentials no")
+          - stdout | search("GSSAPIStrictAcceptorCheck yes")
+          - stdout | search("GSSAPIKeyExchange no")
+          - stdout | search("GSSAPIEnablek5users no")
+          - stdout | search("UsePAM yes")
+          - stdout | search("AllowAgentForwarding yes")
+          - stdout | search("AllowTcpForwarding no")
+          - stdout | search("GatewayPorts no")
+          - stdout | search("PermitTunnel no")
+          - stdout | search("X11Forwarding no")
+          - stdout | search("X11DisplayOffset 10")
+          - stdout | search("X11UseLocalhost yes")
+          - stdout | search("PermitTTY yes")
+          - stdout | search("UseLogin no")
+          - stdout | search("PermitUserEnvironment no")
+          - stdout | search("ChrootDirectory none")
+          - stdout | search("PidFile /var/run/sshd.pid")
+          - stdout | search("MaxStartups 10:30:100")
+          - stdout | search("Ciphers aes256-ctr,aes192-ctr,aes128-ctr")
+          - stdout | search("MACs hmac-sha2-512,mac-sha2-256")
+          - stdout | search("AllowUsers root")
+          - stdout | search("AllowGroups root users)
+          - stdout | search("DenyUsers acme")
+          - stdout | search("DenyGroups acme")
+          - stdout | search("AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS")
+          - stdout | search("Subsystem sftp /usr/libexec/openssh/sftp-server")
+          # - stdout | search("Include {{ sshd_conf_d_dir }}/{{ r.name }}"
         vars:
           stdout: "{{ read_sshd_config_result.stdout }}"
 
   tags:
     - idempotence
+
+
+
+
 
 - name: cleanup docker docker sandbox
   hosts: localhost

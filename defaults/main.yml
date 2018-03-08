@@ -1,42 +1,150 @@
 ---
 # Role default lower priority variables
 
-# Avoid root login through SSH
-permit_root_login: "no"
+# Protocol version
+sshd_protocol_version: 2
 
-# Force SSH version 2
-protocol: 2
+# Networking options
 
-# Avoid port forwarding a X11 forwarding
-allow_tcp_forwarding: "no"
-x11_forwarding: "no"
+sshd_port: 22
+sshd_address_family: "any"
+sshd_listen_addresses:
+  - "0.0.0.0"
+  - "::"
+sshd_tcp_keep_alive: "yes"
+sshd_client_alive_interval: 0
+sshd_client_alive_count_max: 3
+sshd_compression: "delayed"
+sshd_use_dns: "no"
 
-# Number of max failed tries to make SSH
-max_auth_tries: 3
+# Banner an other info at login
 
-# Max time between login fails in seconds
-login_grace_time: 60
+sshd_banner: "/etc/issue.net"
+sshd_print_motd: "yes"
+sshd_print_last_log: "yes"
+sshd_version_addendum: "none"
+sshd_show_patch_level: "no"
 
-# Ignore users rhosts and shosts
-ignore_rhost_file: "yes"
-host_based_authentication: "no"
+# List of host key files
 
-# Permited cipher algorithms and Message Authentication Codes
-ciphers_permited: "aes256-ctr,aes192-ctr,aes128-ctr"
-macs_pertmited: "hmac-sha2-512,hmac-sha2-256"
+sshd_hostkey_files:
+  - "/etc/ssh/ssh_host_rsa_key"
+  - "/etc/ssh/ssh_host_ecdsa_key"
+  - "/etc/ssh/ssh_host_ed25519_key"
 
-# Log level type
-log_level_type: INFO
+# Ciphers and keying
 
-# Permited users and groups to make login through SSH
-# No default values. Use role vars for definition
-allowed_users:
-allowed_groups:
-denied_users:
-denied_groups:
+sshd_rekey_limit: "default none"
 
-# Address through which allow login SSH
-listen_address: 0.0.0.0
+# Logging
 
-# Address family
-address_family: inet
+sshd_syslog_facility: "AUTHPRIV"
+sshd_log_level_type: "INFO"
+
+# Authentication
+
+sshd_login_grace_time: 60
+sshd_permit_root_login: "yes"
+sshd_strict_modes: "yes"
+sshd_max_auth_tries: 3
+sshd_max_sessions: 10
+sshd_pubkey_authentication: "yes"
+sshd_authorized_keys_file: ".ssh/authorized_keys"
+sshd_authorized_principals_file: "none"
+sshd_authorized_keys_command: "none"
+sshd_authorized_keys_command_user: "nobody"
+sshd_host_based_authentication: "no"
+sshd_ignore_known_hosts: "no"
+sshd_ignore_rhosts_file: "yes"
+sshd_permit_empty_passwords: "no"
+sshd_password_authentication: "yes"
+sshd_challenge_response_authentication: "no"
+
+# Kerberos options
+
+sshd_kerberos_authentication: "no"
+sshd_kerberos_or_local_passwd: "yes"
+sshd_kerberos_ticket_cleanup: "yes"
+sshd_kerberos_get_afs_token: "no"
+sshd_kerberos_use_k_user_ok: "yes"
+
+# GSSAPI options
+
+sshd_gssapi_authentication: "yes"
+sshd_gssapi_cleanup_credentials: "no"
+sshd_gssapi_strict_accept_or_check: "yes"
+sshd_gssapi_key_exchange: "no"
+sshd_gssapi_enable_k5_users: "no"
+
+# PAM settings
+
+sshd_use_pam: "yes"
+
+# Forwarding and tunnel options
+
+sshd_allow_agent_forwarding: "yes"
+sshd_allow_tcp_forwarding: "no"
+sshd_gateway_ports: "no"
+sshd_permit_tunnel: "no"
+
+# X11 options
+
+sshd_x11_forwarding: "no"
+sshd_x11_display_offset: 10
+sshd_x11_use_local_host: "yes"
+
+# User environment settings
+
+sshd_permit_tty: "yes"
+sshd_use_login: "no"
+sshd_permit_user_environment: "no"
+sshd_chroot_directory: "none"
+#sshd_force_command:
+
+# Daemon options
+
+sshd_pid_file: "/var/run/sshd.pid"
+sshd_max_startups: "10:30:100"
+sshd_conf_d_dir: "/etc/ssh/sshd_config.d"
+
+# Cipher algorithms and message authentication codes
+
+sshd_ciphers:
+  - "aes256-ctr"
+  - "aes192-ctr"
+  - "aes128-ctr"
+sshd_macs:
+  - "hmac-sha2-512"
+  - "hmac-sha2-256"
+
+# Allowed/Denied users and groups
+
+sshd_allowed_users: []
+sshd_allowed_groups: []
+sshd_denied_users: []
+sshd_denied_groups: []
+
+# List of accepted environment variables
+
+sshd_accept_env:
+  - "LANG"
+  - "LC_CTYPE"
+  - "LC_NUMERIC"
+  - "LC_TIME"
+  - "LC_COLLATE"
+  - "LC_MONETARY"
+  - "LC_MESSAGES"
+  - "LC_PAPER"
+  - "LC_NAME"
+  - "LC_ADDRESS"
+  - "LC_TELEPHONE"
+  - "LC_MEASUREMENT"
+  - "LC_IDENTIFICATION"
+  - "LC_ALL LANGUAGE"
+  - "XMODIFIERS"
+
+# List of dicts with subsystems
+
+sshd_subsystems:
+  - name: "sftp"
+    command: "/usr/libexec/openssh/sftp-server"

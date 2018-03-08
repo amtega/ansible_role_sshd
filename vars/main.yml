@@ -1,2 +1,12 @@
 ---
 # Role variables
+
+sshd_packages:
+  centos:
+    - openssh
+
+  fedora:
+    - apache-sshd
+
+  rhel:
+    - openssh
