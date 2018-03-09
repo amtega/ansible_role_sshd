@@ -1,5 +1,6 @@
 ---
 # Tasks for tesing role
+
 - name: run idempotence test
   hosts: localhost
   roles:
@@ -192,13 +193,8 @@
           # - stdout | search("Include {{ sshd_conf_d_dir }}/{{ r.name }}"
         vars:
           stdout: "{{ read_sshd_config_result.stdout }}"
-
   tags:
     - idempotence
-
-
-
-
 
 - name: cleanup docker docker sandbox
   hosts: localhost
