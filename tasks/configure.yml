@@ -9,24 +9,13 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
-  notify: "reload sshd"
+  vars:
+    sshd_options: "{{ vars | combine(hostvars[inventory_hostname]) }}"
+  notify: reload sshd
 
-- name: configure sshd match rules
-  template:
-    backup: yes
-    src: sshd_config.j2
-    dest: "{{ sshd_conf_d_dir }}/{{ rule.name }}"
-    owner: root
-    group: root
-    mode: "u=rw"
-  with_items: >-
-    sshd_match_rules | selectattr("state", "equaltol", "present") | list
-  notify: "reload sshd"
+- name: verify that sshd config is valid
+  shell: "sshd -t"
+  register: sshd_test_config_result
+  failed_when: sshd_test_config_result.rc != 0
 
-- name: remove unnecessary sshd match rules
-  file:
-    path: "{{ sshd_conf_d_dir }}/{{ rule.name }}"
-    state: absent
-  with_items: >-
-    sshd_match_rules | selectattr("state", "equaltol", "absent") | list
-  notify: "reload sshd"
+- meta: flush_handlers
