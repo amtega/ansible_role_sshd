@@ -179,7 +179,10 @@
           - stdout | search("AllowGroups root users")
           - stdout | search("DenyUsers acme")
           - stdout | search("DenyGroups acme")
-          - stdout | search("AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS")
+          - stdout | search("AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME "
+                            + "LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER "
+                            + "LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT "
+                            + "LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS")
           - stdout | search("Subsystem sftp /usr/libexec/openssh/sftp-server")
           - stdout | search("Match User acme")
           - stdout | search("  X11Forwarding yes")
