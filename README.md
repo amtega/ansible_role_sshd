@@ -8,7 +8,7 @@ This is an [Ansible](http://www.ansible.com) role to setup sshd.
 
 ## Role Variables
 
-A list of all the default variables for this role is available in defaults/main.yml. Not all default variables has assigned a value, probabily may be necessary assign roles values when using it.
+A list of all the default variables for this role is available in `defaults/main.yml`.
 
 ## Dependencies
 
@@ -16,11 +16,15 @@ None.
 
 ## Example Playbook
 
-- name: configure sshd_config
-  become: true
-  hosts: localhost
+This is an example playbook:
+
+```yaml
+---
+
+- hosts: all
   roles:
-    - role: amtega.sshd
+    - amtega.sshd
+```
 
 ## Testing
 
