@@ -1,6 +1,6 @@
-# role_name
+# Ansib le ssd role
 
-Configure sshd service  
+This is an [Ansible](http://www.ansible.com) role to setup sshd.
 
 ## Requirements
 
@@ -27,8 +27,15 @@ None.
 Test are based on docker containers. You can run the tests with the following commands:
 
 ```shell
-$ cd amtega.login_defs/test
-$ ansible-playbook main.yml -K
+$ cd amtega.sshd/test
+$ ansible-playbook main.yml
+```
+
+If you have docker engine configured you can avoid running dependant 'docker_engine' role (that usually requries root privileges) with the following commands:
+
+```shell
+$ cd amtega.sshd/test
+$ ansible-playbook --skip-tags "role::docker_engine" main.yml
 ```
 
 ## License
@@ -49,5 +56,5 @@ GNU General Public License for more details or European Union Public License for
 
 ## Author Information
 
-- author_name 1 ([mail_adrress_1](mailto:mail_address_1))
-- author_name N ([mail_adrress_N](mailto:mail_address_N))
+- Carlos Chedas Fernández
+- Juan Antonio Valiño García

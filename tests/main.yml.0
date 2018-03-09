@@ -1,7 +1,0 @@
----
-# Tasks for tesing role
-- name: configure sshd_config
-  become: true
-  hosts: testservers
-  roles:
-    - role: amtega.sshd

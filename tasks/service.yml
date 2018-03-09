@@ -1,17 +1,8 @@
 ---
-- debug:
-    msg: "Distrbution: {{ ansible_distribution }} Version: {{ ansible_distribution_major_version }}"
+# Role service tasks
 
-- name: restart sshd with systemd
-  systemd:
-    name: sshd.service
-    enabled: yes
-    state: restarted
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version >= '7'
-
-- name: restart sshd daemon
+- name: start and enable sshd daemon
   service:
     name: sshd
     enabled: yes
-    state: restarted
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version < '7'
+    state: started

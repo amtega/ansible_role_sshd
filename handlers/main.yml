@@ -1,2 +1,22 @@
 ---
 # Role handlers
+
+- name: sshd reload
+  service:
+    name: sshd
+    state: reloaded
+  listen:
+    - reload sshd
+  tags:
+    - role::sshd
+    - role::sshd::service
+
+- name: sshd restart
+  service:
+    name: sshd
+    state: restarted
+  listen:
+    - restart sshd
+  tags:
+    - role::sshd
+    - role::sshd::service

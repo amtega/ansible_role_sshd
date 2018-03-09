@@ -1,2 +1,14 @@
 ---
 # Role variables
+
+# List of packages to install for each supported distribution
+
+sshd_packages:
+  centos:
+    - openssh
+
+  fedora:
+    - apache-sshd
+
+  rhel:
+    - openssh

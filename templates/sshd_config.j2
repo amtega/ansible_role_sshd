@@ -1,20 +1,26 @@
 {{ ansible_managed | comment }}
 
-PermitRootLogin {{ permit_root_login }}
-Protocol {{ protocol }}
-AllowTcpForwarding {{ allow_tcp_forwarding }}
-X11Forwarding {{ x11_forwarding }}
-MaxAuthTries {{ max_auth_tries }}
-LoginGraceTime {{ login_grace_time }}
-IgnoreRhosts {{ ignore_rhost_file }}
-HostbasedAuthentication {{ host_based_authentication }}
-Ciphers {{ ciphers_permited }}
-MACs {{ macs_pertmited }}
-LogLevel {{ log_level_type }}
-AllowUsers {{ allowed_users }}
-AllowGroups {{ allowed_groups }}
-DenyUsers {{ denied_users }}
-DenyGroups {{ denied_groups }}
-AddressFamily {{ address_family }}
-ListenAddress {{ listen_address }}
-Banner /etc/issue.net
+{%- macro render_options(options={}, blank_lines=true) %}
+{% include "sshd_options.j2" %}
+{%- endmacro %}
+
+{% if sshd_options.sshd_pid_file is defined %}PidFile {{ sshd_options.sshd_pid_file }}{% endif %}
+
+{% if sshd_options.sshd_max_startups is defined %}MaxStartups {{ sshd_options.sshd_max_startups }}{% endif %}
+
+{% if sshd_options.sshd_protocol_version is defined %}Protocol {{ sshd_options.sshd_protocol_version }}{% endif %}
+
+{% if sshd_options.sshd_port is defined %}Port {{ sshd_options.sshd_port }}{% endif %}
+
+{% if sshd_options.sshd_address_family is defined %}AddressFamily {{ sshd_options.sshd_address_family }}{% endif %}
+
+{% for address in sshd_listen_addresses | default([]) %}
+ListenAddress {{ address }}
+{% endfor %}
+
+{{ render_options(sshd_options) }}
+{% for r in sshd_match_rules | default([]) | selectattr("state", "equalto", "present") | list %}
+Match {% for c in r.conditions %}{{ c.type }} {{ c.pattern }}
+{% endfor %}
+{{ render_options(r.options, blank_lines=false) | indent(width=2, indentfirst=true) }}
+{% endfor %}
