@@ -5,4 +5,4 @@
   service:
     name: sshd
     enabled: yes
-    state: restarted
+    state: started
