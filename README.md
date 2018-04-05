@@ -4,7 +4,7 @@ This is an [Ansible](http://www.ansible.com) role to setup sshd.
 
 ## Requirements
 
-- Ansible >= 2.4
+- Ansible >= 2.5
 
 ## Role Variables
 
