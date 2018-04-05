@@ -5,7 +5,7 @@
   package:
     name: "{{ item }}"
     state: present
-  with_items: "{{ sshd_packages[ansible_distribution | lower] }}"
+  loop: "{{ sshd_packages[ansible_distribution | lower] }}"
 
 - name: create directory for sshd include files
   file:
