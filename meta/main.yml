@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: sshd
   author: Carlos Chedas Fernández / Juan Antonio Valiño García
   description: Setup sshd server
   company: AMTEGA - Xunta de Galicia
