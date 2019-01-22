@@ -6,3 +6,6 @@
     name: sshd
     enabled: yes
     state: started
+  tags:
+    - role::sshd
+    - role::sshd:service
