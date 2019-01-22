@@ -1,22 +1,22 @@
 ---
 # Role configuration tasks
 
-- name: configure main sshd options
-  template:
-    backup: yes
-    src: sshd_config.j2
-    dest: /etc/ssh/sshd_config
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  vars:
-    sshd_options: "{{ vars | combine(hostvars[inventory_hostname]) }}"
-  notify: reload sshd
+- block:
+    - name: configure sshd
+      template:
+        backup: yes
+        src: sshd_config.j2
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify: reload sshd
 
-- name: verify that sshd config is valid
-  shell: "sshd -t"
-  register: sshd_test_config_result
-  failed_when: sshd_test_config_result.rc != 0
-  changed_when: false
-
-- meta: flush_handlers
+    - name: verify that sshd config is valid
+      shell: "sshd -t"
+      register: sshd_test_config_result
+      failed_when: sshd_test_config_result.rc != 0
+      changed_when: false
+  tags:
+    - role::sshd
+    - role::sshd::configure

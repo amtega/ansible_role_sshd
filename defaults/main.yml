@@ -3,7 +3,7 @@
 
 # Daemon options
 
-sshd_pid_file: "/var/run/sshd.pid"
+sshd_pid_file: /var/run/sshd.pid
 sshd_max_startups: "10:30:100"
 
 # Protocol version
@@ -13,93 +13,93 @@ sshd_protocol_version: 2
 # Networking options
 
 sshd_port: 22
-sshd_address_family: "any"
+sshd_address_family: any
 sshd_listen_addresses:
-  - "0.0.0.0"
+  - 0.0.0.0
   - "::"
-sshd_tcp_keep_alive: "yes"
+sshd_tcp_keep_alive: yes
 sshd_client_alive_interval: 0
 sshd_client_alive_count_max: 3
-sshd_compression: "delayed"
-sshd_use_dns: "no"
+sshd_compression: delayed
+sshd_use_dns: no
 
 # Banner an other info at login
 
-sshd_banner: "/etc/issue.net"
-sshd_print_motd: "yes"
-sshd_print_last_log: "yes"
-#sshd_version_addendum: ""
-sshd_show_patch_level: "no"
+sshd_banner: /etc/issue.net
+sshd_print_motd: yes
+sshd_print_last_log: yes
+#sshd_version_addendum:
+sshd_show_patch_level: no
 
 # List of host key files
 
 sshd_hostkey_files:
-  - "/etc/ssh/ssh_host_rsa_key"
-  - "/etc/ssh/ssh_host_ecdsa_key"
-  - "/etc/ssh/ssh_host_ed25519_key"
+  - /etc/ssh/ssh_host_rsa_key
+  - /etc/ssh/ssh_host_ecdsa_key
+  - /etc/ssh/ssh_host_ed25519_key
 
 # Logging
 
-sshd_syslog_facility: "AUTHPRIV"
-sshd_log_level_type: "INFO"
+sshd_syslog_facility: AUTHPRIV
+sshd_log_level_type: INFO
 
 # Authentication
 
 sshd_login_grace_time: 60
-sshd_permit_root_login: "yes"
-sshd_strict_modes: "yes"
+sshd_permit_root_login: yes
+sshd_strict_modes: yes
 sshd_max_auth_tries: 3
 sshd_max_sessions: 10
-sshd_pubkey_authentication: "yes"
-sshd_authorized_keys_file: ".ssh/authorized_keys"
+sshd_pubkey_authentication: yes
+sshd_authorized_keys_file: .ssh/authorized_keys
 # sshd_authorized_principals_file:
 # sshd_authorized_keys_command:
 #sshd_authorized_keys_command_user:
-sshd_host_based_authentication: "no"
-sshd_ignore_known_hosts: "no"
-sshd_ignore_rhosts_file: "yes"
-sshd_permit_empty_passwords: "no"
-sshd_password_authentication: "yes"
-sshd_challenge_response_authentication: "no"
+sshd_host_based_authentication: no
+sshd_ignore_known_hosts: no
+sshd_ignore_rhosts_file: yes
+sshd_permit_empty_passwords: no
+sshd_password_authentication: yes
+sshd_challenge_response_authentication: no
 
 # Kerberos options
 
-sshd_kerberos_authentication: "no"
-sshd_kerberos_or_local_passwd: "yes"
-sshd_kerberos_ticket_cleanup: "yes"
-#sshd_kerberos_get_afs_token: "no"
-sshd_kerberos_use_k_user_ok: "yes"
+sshd_kerberos_authentication: no
+sshd_kerberos_or_local_passwd: yes
+sshd_kerberos_ticket_cleanup: yes
+#sshd_kerberos_get_afs_token: no
+sshd_kerberos_use_k_user_ok: yes
 
 # GSSAPI options
 
-sshd_gssapi_authentication: "yes"
-sshd_gssapi_cleanup_credentials: "no"
-sshd_gssapi_strict_accept_or_check: "yes"
-sshd_gssapi_key_exchange: "no"
-# sshd_gssapi_enable_k5_users: "no"
+sshd_gssapi_authentication: yes
+sshd_gssapi_cleanup_credentials: no
+sshd_gssapi_strict_accept_or_check: yes
+sshd_gssapi_key_exchange: no
+# sshd_gssapi_enable_k5_users: no
 
 # PAM settings
 
-sshd_use_pam: "yes"
+sshd_use_pam: yes
 
 # Forwarding and tunnel options
 
-sshd_allow_agent_forwarding: "yes"
-sshd_allow_tcp_forwarding: "no"
-sshd_gateway_ports: "no"
-sshd_permit_tunnel: "no"
+sshd_allow_agent_forwarding: yes
+sshd_allow_tcp_forwarding: no
+sshd_gateway_ports: no
+sshd_permit_tunnel: no
 
 # X11 options
 
-sshd_x11_forwarding: "no"
+sshd_x11_forwarding: no
 sshd_x11_display_offset: 10
-sshd_x11_use_local_host: "yes"
+sshd_x11_use_local_host: yes
 
 # User environment settings
 
-#sshd_permit_tty: "yes"
-sshd_use_login: "no"
-sshd_permit_user_environment: "no"
+#sshd_permit_tty: yes
+sshd_use_login: no
+sshd_permit_user_environment: no
 #sshd_chroot_directory:
 #sshd_force_command:
 
@@ -108,12 +108,12 @@ sshd_permit_user_environment: "no"
 #sshd_rekey_limit:
 
 sshd_ciphers:
-  - "aes256-ctr"
-  - "aes192-ctr"
-  - "aes128-ctr"
+  - aes256-ctr
+  - aes192-ctr
+  - aes128-ctr
 sshd_macs:
-  - "hmac-sha2-512"
-  - "hmac-sha2-256"
+  - hmac-sha2-512
+  - hmac-sha2-256
 
 # Allowed/Denied users and groups
 
@@ -125,46 +125,68 @@ sshd_denied_groups: []
 # List of accepted environment variables
 
 sshd_accept_env:
-  - "LANG"
-  - "LC_CTYPE"
-  - "LC_NUMERIC"
-  - "LC_TIME"
-  - "LC_COLLATE"
-  - "LC_MONETARY"
-  - "LC_MESSAGES"
-  - "LC_PAPER"
-  - "LC_NAME"
-  - "LC_ADDRESS"
-  - "LC_TELEPHONE"
-  - "LC_MEASUREMENT"
-  - "LC_IDENTIFICATION"
-  - "LC_ALL LANGUAGE"
-  - "XMODIFIERS"
+  - LANG
+  - LC_CTYPE
+  - LC_NUMERIC
+  - LC_TIME
+  - LC_COLLATE
+  - LC_MONETARY
+  - LC_MESSAGES
+  - LC_PAPER
+  - LC_NAME
+  - LC_ADDRESS
+  - LC_TELEPHONE
+  - LC_MEASUREMENT
+  - LC_IDENTIFICATION
+  - LC_ALL LANGUAGE
+  - XMODIFIERS
 
 # List of dicts with subsystems. The dicts must have the following
 # format:
 #
-# { name: "sftp                                  # Name of the Subsystem
-#   command: "/usr/libexec/openssh/sftp-server"  # Subsystem command }
+# {
+#   name: <name>                                 # Name of the Subsystem
+#   command: <command>                           # Subsystem command
+# }
+#
+# Sample:
+#
+# {
+#   name: sftp
+#   command: /usr/libexec/openssh/sftp-server
+# }
 
 sshd_subsystems:
-  - name: "sftp"
-    command: "/usr/libexec/openssh/sftp-server"
+  - name: sftp
+    command: /usr/libexec/openssh/sftp-server
 
 # List of dicts with specific config rules to apply for specific users, groups,
 # hosts or addresses. See sshd man page for details. The dicts must have the
 # following format:
 #
-# { name: "user_acme"       # Name of the rule. An include file for the rule
-#                           # will be created with this name
-#   state: "present"        # State of the rule with that name. Can be
-                            # present or absent
+# {
+#   name: <name>            # Name of the rule (for identification purposes)
 #   conditions:             # List of dicts with the conditions to check
-#     - type: "User"        # Type of match. Can be User, Group, Host or Address
-#       pattern: "acme"     # Patern to match
+#     - type: <type>        # Type of match. Can be User, Group, Host or Address
+#       pattern: <pattern>  # Patern to match
 #
 #   options:                # Dict with the specific options to apply
-#     sshd_x11_forwarding: "yes"
-#     sshd_password_authentication: "no" }
+#     <option1>: <value1>
+#     <option2>: <value2>
+#     <optionN>: <valueN>
+# }
+#
+# Sample:
+#
+# {
+#   name: user_acme
+#   conditions:
+#     - type: User"
+#       pattern: acme
+#
+#   options:
+#     sshd_x11_forwarding: yes
+#     sshd_password_authentication: no
+# }
 
 sshd_match_rules: []

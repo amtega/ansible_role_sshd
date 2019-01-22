@@ -5,6 +5,12 @@
   hosts: localhost
   roles:
     - role: amtega.docker_presets
+      docker_presets_images_json_query: >-
+        [? starts_with(name, `centos-6`)
+           || starts_with(name, `centos-7`)
+           || starts_with(name, `fedora-27`)
+           || starts_with(name, `fedora-28`) ]
+
     - role: amtega.docker_sandbox
       docker_sandbox_state: started
   tags:
@@ -17,66 +23,66 @@
   vars:
     sshd_protocol_version: 2
     sshd_port: 22
-    sshd_address_family: "any"
+    sshd_address_family: any
     sshd_listen_addresses:
-      - "0.0.0.0"
+      - 0.0.0.0
       - "::"
-    sshd_tcp_keep_alive: "yes"
+    sshd_tcp_keep_alive: yes
     sshd_client_alive_interval: 0
     sshd_client_alive_count_max: 3
-    sshd_compression: "delayed"
-    sshd_use_dns: "no"
-    sshd_banner: "/etc/issue.net"
-    sshd_print_motd: "yes"
-    sshd_print_last_log: "yes"
-    sshd_show_patch_level: "no"
+    sshd_compression: delayed
+    sshd_use_dns: no
+    sshd_banner: /etc/issue.net
+    sshd_print_motd: yes
+    sshd_print_last_log: yes
+    sshd_show_patch_level: no
     sshd_hostkey_files:
-      - "/etc/ssh/ssh_host_rsa_key"
-      - "/etc/ssh/ssh_host_ecdsa_key"
-      - "/etc/ssh/ssh_host_ed25519_key"
-    sshd_syslog_facility: "AUTHPRIV"
-    sshd_log_level_type: "INFO"
+      - /etc/ssh/ssh_host_rsa_key
+      - /etc/ssh/ssh_host_ecdsa_key
+      - /etc/ssh/ssh_host_ed25519_key
+    sshd_syslog_facility: AUTHPRIV
+    sshd_log_level_type: INFO
     sshd_login_grace_time: 60
-    sshd_permit_root_login: "yes"
-    sshd_strict_modes: "yes"
+    sshd_permit_root_login: yes
+    sshd_strict_modes: yes
     sshd_max_auth_tries: 3
     sshd_max_sessions: 10
-    sshd_pubkey_authentication: "yes"
-    sshd_authorized_keys_file: ".ssh/authorized_keys"
-    sshd_host_based_authentication: "no"
-    sshd_ignore_known_hosts: "no"
-    sshd_ignore_rhosts_file: "yes"
-    sshd_permit_empty_passwords: "no"
-    sshd_password_authentication: "yes"
-    sshd_challenge_response_authentication: "no"
-    sshd_kerberos_authentication: "no"
-    sshd_kerberos_or_local_passwd: "yes"
-    sshd_kerberos_ticket_cleanup: "yes"
-    sshd_kerberos_use_k_user_ok: "yes"
-    sshd_gssapi_authentication: "yes"
-    sshd_gssapi_cleanup_credentials: "no"
-    sshd_gssapi_strict_accept_or_check: "yes"
-    sshd_gssapi_key_exchange: "no"
-    sshd_use_pam: "yes"
-    sshd_allow_agent_forwarding: "yes"
-    sshd_allow_tcp_forwarding: "no"
-    sshd_gateway_ports: "no"
-    sshd_permit_tunnel: "no"
-    sshd_x11_forwarding: "no"
+    sshd_pubkey_authentication: yes
+    sshd_authorized_keys_file: .ssh/authorized_keys
+    sshd_host_based_authentication: no
+    sshd_ignore_known_hosts: no
+    sshd_ignore_rhosts_file: yes
+    sshd_permit_empty_passwords: no
+    sshd_password_authentication: yes
+    sshd_challenge_response_authentication: no
+    sshd_kerberos_authentication: no
+    sshd_kerberos_or_local_passwd: yes
+    sshd_kerberos_ticket_cleanup: yes
+    sshd_kerberos_use_k_user_ok: yes
+    sshd_gssapi_authentication: yes
+    sshd_gssapi_cleanup_credentials: no
+    sshd_gssapi_strict_accept_or_check: yes
+    sshd_gssapi_key_exchange: no
+    sshd_use_pam: yes
+    sshd_allow_agent_forwarding: yes
+    sshd_allow_tcp_forwarding: no
+    sshd_gateway_ports: no
+    sshd_permit_tunnel: no
+    sshd_x11_forwarding: no
     sshd_x11_display_offset: 10
-    sshd_x11_use_local_host: "yes"
-    sshd_use_login: "no"
-    sshd_permit_user_environment: "no"
-    sshd_pid_file: "/var/run/sshd.pid"
+    sshd_x11_use_local_host: yes
+    sshd_use_login: no
+    sshd_permit_user_environment: no
+    sshd_pid_file: /var/run/sshd.pid
     sshd_max_startups: "10:30:100"
-    sshd_conf_d_dir: "/etc/ssh/sshd_config.d"
+    sshd_conf_d_dir: /etc/ssh/sshd_config.d
     sshd_ciphers:
-      - "aes256-ctr"
-      - "aes192-ctr"
-      - "aes128-ctr"
+      - aes256-ctr
+      - aes192-ctr
+      - aes128-ctr
     sshd_macs:
-      - "hmac-sha2-512"
-      - "hmac-sha2-256"
+      - hmac-sha2-512
+      - hmac-sha2-256
     sshd_allowed_users:
       - root
     sshd_allowed_groups:
@@ -87,33 +93,33 @@
     sshd_denied_groups:
       - acme
     sshd_accept_env:
-      - "LANG"
-      - "LC_CTYPE"
-      - "LC_NUMERIC"
-      - "LC_TIME"
-      - "LC_COLLATE"
-      - "LC_MONETARY"
-      - "LC_MESSAGES"
-      - "LC_PAPER"
-      - "LC_NAME"
-      - "LC_ADDRESS"
-      - "LC_TELEPHONE"
-      - "LC_MEASUREMENT"
-      - "LC_IDENTIFICATION"
-      - "LC_ALL LANGUAGE"
-      - "XMODIFIERS"
+      - LANG
+      - LC_CTYPE
+      - LC_NUMERIC
+      - C_TIME
+      - LC_COLLATE
+      - LC_MONETARY
+      - LC_MESSAGES
+      - LC_PAPER
+      - LC_NAME
+      - LC_ADDRESS
+      - LC_TELEPHONE
+      - LC_MEASUREMENT
+      - LC_IDENTIFICATION
+      - LC_ALL LANGUAGE
+      - XMODIFIERS
     sshd_subsystems:
-      - name: "sftp"
-        command: "/usr/libexec/openssh/sftp-server"
+      - name: sftp
+        command: /usr/libexec/openssh/sftp-server
     sshd_match_rules:
-      - name: "user_acme"
-        state: "present"
+      - name: user_acme
+        state: present
         conditions:
-          - type: "User"
-            pattern: "acme"
+          - type: User
+            pattern: acme
         options:
-          sshd_x11_forwarding: "yes"
-          sshd_password_authentication: "no"
+          sshd_x11_forwarding: yes
+          sshd_password_authentication: no
   tasks:
       - name: read main sshd config file
         shell: "cat /etc/ssh/sshd_config"
@@ -181,17 +187,13 @@
           - stdout is search("AllowGroups root users")
           - stdout is search("DenyUsers acme")
           - stdout is search("DenyGroups acme")
-          - stdout is search("AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME "
-                            + "LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER "
-                            + "LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT "
-                            + "LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS")
+          - stdout is search("AcceptEnv LANG.*")
           - stdout is search("Subsystem sftp /usr/libexec/openssh/sftp-server")
           - stdout is search("Match User acme")
           - stdout is search("  X11Forwarding yes")
           - stdout is search("  PasswordAuthentication no")
         vars:
           stdout: "{{ read_sshd_config_result.stdout }}"
-
   tags:
     - idempotence
 
@@ -202,3 +204,4 @@
       docker_sandbox_state: absent
   tags:
     - sandbox
+    - cleanup

@@ -1,26 +1,39 @@
 {{ ansible_managed | comment }}
 
-{%- macro render_options(options={}, blank_lines=true) %}
-{% include "sshd_options.j2" %}
-{%- endmacro %}
-
-{% if sshd_options.sshd_pid_file is defined %}PidFile {{ sshd_options.sshd_pid_file }}{% endif %}
-
-{% if sshd_options.sshd_max_startups is defined %}MaxStartups {{ sshd_options.sshd_max_startups }}{% endif %}
-
-{% if sshd_options.sshd_protocol_version is defined %}Protocol {{ sshd_options.sshd_protocol_version }}{% endif %}
-
-{% if sshd_options.sshd_port is defined %}Port {{ sshd_options.sshd_port }}{% endif %}
-
-{% if sshd_options.sshd_address_family is defined %}AddressFamily {{ sshd_options.sshd_address_family }}{% endif %}
-
-{% for address in sshd_listen_addresses | default([]) %}
-ListenAddress {{ address }}
+{% macro render_options(options) %}
+{% for option in options %}
+{% set ansible_option = option.name %}
+{% set sshd_option = sshd_options_map[ansible_option] %}
+{% set value = option.value %}
+{% if value is not sameas true
+      and value is not sameas false
+      and (value is string
+          or (value is number and value >= 0)) %}
+{{ sshd_option }} {{ value }}
+{% elif value is sequence %}
+{% if ansible_option in sshd_options_separated_by_comma %}
+{{ sshd_option }} {{ value | join(",") }}
+{% elif ansible_option in sshd_options_separated_by_space %}
+{{ sshd_option }} {{ value | join(" ") }}
+{% else %}
+{% for item in value %}
+{{ sshd_option }} {{ item }}
+{% endfor %}
+{% endif %}
+{% elif value == true %}
+{{ sshd_option }} yes
+{% elif value == false %}
+{{ sshd_option }} no
+{% endif %}
+{% endfor %}
+{% endmacro %}
+{{ render_options(sshd_main_options) }}
+{% for s in sshd_subsystems | default([]) %}
+Subsystem {{ s.name }} {{ s.command }}
 {% endfor %}
 
-{{ render_options(sshd_options) }}
-{% for r in sshd_match_rules | default([]) | selectattr("state", "equalto", "present") | list %}
-Match {% for c in r.conditions %}{{ c.type }} {{ c.pattern }}
+{% for rule in sshd_match_rules %}
+Match {% for condition in rule.conditions %}{{ condition.type }} {{ condition.pattern }}
 {% endfor %}
-{{ render_options(r.options, blank_lines=false) | indent(width=2, indentfirst=true) }}
+{{ render_options(sshd_rules_options[rule.name]) | indent(width=2, indentfirst=true) }}
 {% endfor %}
