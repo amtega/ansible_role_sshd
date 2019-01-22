@@ -13,7 +13,7 @@
       notify: reload sshd
 
     - name: verify that sshd config is valid
-      shell: "sshd -t"
+      command: "sshd -t"
       register: sshd_test_config_result
       failed_when: sshd_test_config_result.rc != 0
       changed_when: false
