@@ -145,8 +145,15 @@ sshd_accept_env:
 # format:
 #
 # {
-#   name: "sftp                                  # Name of the Subsystem
-#   command: "/usr/libexec/openssh/sftp-server"  # Subsystem command
+#   name: <name>                                 # Name of the Subsystem
+#   command: <command>                           # Subsystem command
+# }
+#
+# Sample:
+#
+# {
+#   name: sftp
+#   command: /usr/libexec/openssh/sftp-server
 # }
 
 sshd_subsystems:
@@ -158,15 +165,26 @@ sshd_subsystems:
 # following format:
 #
 # {
-#   name: "user_acme"       # Name of the rule. An include file for the rule
-#                           # will be created with this name
-#   state: "present"        # State of the rule with that name. Can be
-                            # present or absent
+#   name: <name>            # Name of the rule (for identification purposes)
 #   conditions:             # List of dicts with the conditions to check
-#     - type: "User"        # Type of match. Can be User, Group, Host or Address
-#       pattern: "acme"     # Patern to match
+#     - type: <type>        # Type of match. Can be User, Group, Host or Address
+#       pattern: <pattern>  # Patern to match
 #
 #   options:                # Dict with the specific options to apply
+#     <option1>: <value1>
+#     <option2>: <value2>
+#     <optionN>: <valueN>
+# }
+#
+# Sample:
+#
+# {
+#   name: user_acme
+#   conditions:
+#     - type: User"
+#       pattern: acme
+#
+#   options:
 #     sshd_x11_forwarding: yes
 #     sshd_password_authentication: no
 # }

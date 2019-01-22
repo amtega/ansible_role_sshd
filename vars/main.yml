@@ -1,88 +1,96 @@
 ---
 # Role variables
 
-# SSH config option to ansible variable map
+# SSH config options
 
-sshd_options_map:
-  PidFile: sshd_pid_file
-  MaxStartups: sshd_max_startups
-  Protocol: sshd_protocol_version
-  Port: sshd_port
-  AddressFamily: sshd_address_family
-  ListenAddress: sshd_listen_addresses
-  TCPKeepAlive: sshd_tcp_keep_alive
-  ClientAliveInterval: sshd_client_alive_interval
-  ClientAliveCountMax: sshd_client_alive_count_max
-  Compression: sshd_compression
-  UseDNS: sshd_use_dns
-  Banner: sshd_banner
-  PrintMotd: sshd_print_motd
-  PrintLastLog: sshd_print_last_log
-  VersionAddendum: sshd_version_addendum
-  ShowPatchLevel: sshd_show_patch_level
-  HostKey: sshd_hostkey_files
-  SyslogFacility: sshd_syslog_facility
-  LogLevel: sshd_log_level_type
-  LoginGraceTime: sshd_login_grace_time
-  PermitRootLogin: sshd_permit_root_login
-  StrictModes: sshd_strict_modes
-  MaxAuthTries: sshd_max_auth_tries
-  MaxSessions: sshd_max_sessions
-  PubkeyAuthentication: sshd_pubkey_authentication
-  AuthorizedKeysFile: sshd_authorized_keys_file
-  AuthorizedPrincipalsFile: sshd_authorized_principals_file
-  AuthorizedKeysCommand: sshd_authorized_keys_command
-  AuthorizedKeysCommandUser: sshd_authorized_keys_command_user
-  HostbasedAuthentication: sshd_host_based_authentication
-  IgnoreUserKnownHosts: sshd_ignore_known_hosts
-  IgnoreRhosts: sshd_ignore_rhosts_file
-  PermitEmptyPasswords: sshd_permit_empty_passwords
-  PasswordAuthentication: sshd_password_authentication
-  ChallengeResponseAuthentication: sshd_challenge_response_authentication
-  KerberosAuthentication: sshd_kerberos_authentication
-  KerberosOrLocalPasswd: sshd_kerberos_or_local_passwd
-  KerberosTicketCleanup: sshd_kerberos_ticket_cleanup
-  KerberosGetAFSToken: sshd_kerberos_get_afs_token
-  KerberosUseKuserok: sshd_kerberos_use_k_user_ok
-  GSSAPIAuthentication: sshd_gssapi_authentication
-  GSSAPICleanupCredentials: sshd_gssapi_cleanup_credentials
-  GSSAPIStrictAcceptorCheck: sshd_gssapi_strict_accept_or_check
-  GSSAPIKeyExchange: sshd_gssapi_key_exchange
-  GSSAPIEnablek5users: sshd_gssapi_enable_k5_users
-  UsePAM: sshd_use_pam
-  AllowAgentForwarding: sshd_allow_agent_forwarding
-  AllowTcpForwarding: sshd_allow_tcp_forwarding
-  GatewayPorts: sshd_gateway_ports
-  PermitTunnel: sshd_permit_tunnel
-  X11Forwarding: sshd_x11_forwarding
-  X11DisplayOffset: sshd_x11_display_offset
-  X11UseLocalhost: sshd_x11_use_local_host
-  PermitTTY: sshd_permit_tty
-  UseLogin: sshd_use_login
-  PermitUserEnvironment: sshd_permit_user_environment
-  ChrootDirectory: sshd_chroot_directory
-  ForceCommand: sshd_force_command
-  RekeyLimit: sshd_rekey_limit
-  Ciphers: sshd_ciphers
-  MACs: sshd_macs
-  AllowUsers: sshd_allowed_users
-  AllowGroups: sshd_allowed_groups
-  DenyUsers: sshd_denied_users
-  DenyGroups: sshd_denied_groups
-  AcceptEnv: sshd_accept_env
+sshd_options_list:
+  - sshd_pid_file: PidFile
+  - sshd_max_startups: MaxStartups
+  - sshd_protocol_version: Protocol
+  - sshd_port: Port
+  - sshd_address_family: AddressFamily
+  - sshd_listen_addresses: ListenAddress
+  - sshd_tcp_keep_alive: TCPKeepAlive
+  - sshd_client_alive_interval: ClientAliveInterval
+  - sshd_client_alive_count_max: ClientAliveCountMax
+  - sshd_compression: Compression
+  - sshd_use_dns: UseDNS
+  - sshd_banner: Banner
+  - sshd_print_motd: PrintMotd
+  - sshd_print_last_log: PrintLastLog
+  - sshd_version_addendum: VersionAddendum
+  - sshd_show_patch_level: ShowPatchLevel
+  - sshd_hostkey_files: HostKey
+  - sshd_syslog_facility: SyslogFacility
+  - sshd_log_level_type: LogLevel
+  - sshd_login_grace_time: LoginGraceTime
+  - sshd_permit_root_login: PermitRootLogin
+  - sshd_strict_modes: StrictModes
+  - sshd_max_auth_tries: MaxAuthTries
+  - sshd_max_sessions: MaxSessions
+  - sshd_pubkey_authentication: PubkeyAuthentication
+  - sshd_authorized_keys_file: AuthorizedKeysFile
+  - sshd_authorized_principals_file: AuthorizedPrincipalsFile
+  - sshd_authorized_keys_command: AuthorizedKeysCommand
+  - sshd_authorized_keys_command_user: AuthorizedKeysCommandUser
+  - sshd_host_based_authentication: HostbasedAuthentication
+  - sshd_ignore_known_hosts: IgnoreUserKnownHosts
+  - sshd_ignore_rhosts_file: IgnoreRhosts
+  - sshd_permit_empty_passwords: PermitEmptyPasswords
+  - sshd_password_authentication: PasswordAuthentication
+  - sshd_challenge_response_authentication: ChallengeResponseAuthentication
+  - sshd_kerberos_authentication: KerberosAuthentication
+  - sshd_kerberos_or_local_passwd: KerberosOrLocalPasswd
+  - sshd_kerberos_ticket_cleanup: KerberosTicketCleanup
+  - sshd_kerberos_get_afs_token: KerberosGetAFSToken
+  - sshd_kerberos_use_k_user_ok: KerberosUseKuserok
+  - sshd_gssapi_authentication: GSSAPIAuthentication
+  - sshd_gssapi_cleanup_credentials: GSSAPICleanupCredentials
+  - sshd_gssapi_strict_accept_or_check: GSSAPIStrictAcceptorCheck
+  - sshd_gssapi_key_exchange: GSSAPIKeyExchange
+  - sshd_gssapi_enable_k5_users: GSSAPIEnablek5users
+  - sshd_use_pam: UsePAM
+  - sshd_allow_agent_forwarding: AllowAgentForwarding
+  - sshd_allow_tcp_forwarding: AllowTcpForwarding
+  - sshd_gateway_ports: GatewayPorts
+  - sshd_permit_tunnel: PermitTunnel
+  - sshd_x11_forwarding: X11Forwarding
+  - sshd_x11_display_offset: X11DisplayOffset
+  - sshd_x11_use_local_host: X11UseLocalhost
+  - sshd_permit_tty: PermitTTY
+  - sshd_use_login: UseLogin
+  - sshd_permit_user_environment: PermitUserEnvironment
+  - sshd_chroot_directory: ChrootDirectory
+  - sshd_force_command: ForceCommand
+  - sshd_rekey_limit: RekeyLimit
+  - sshd_ciphers: Ciphers
+  - sshd_macs: MACs
+  - sshd_allowed_users: AllowUsers
+  - sshd_allowed_groups: AllowGroups
+  - sshd_denied_users: DenyUsers
+  - sshd_denied_groups: DenyGroups
+  - sshd_accept_env: AcceptEnv
 
-sshd_options_map_reverse: >-
-  {{ lookup('template', 'reverse_map.yml.j2') | from_yaml }}
+sshd_options_map: >-
+  {{ lookup('template', 'sshd_options_map.yml.j2') | from_yaml }}
+
+sshd_main_options: >-
+  {{ lookup('template', 'sshd_main_options.yml.j2') | from_yaml }}
+
+sshd_rules_options: >-
+  {{ lookup('template', 'sshd_rules_options.yml.j2') | from_yaml }}
 
 # SSH options separated by comma
 
-ssh_options_separated_by_comma:
-  - Ciphers
-  - MACs
+sshd_options_separated_by_comma:
+  - sshd_ciphers
+  - sshd_macs
 
-ssh_options_separated_by_space:
-  - AllowUsers
-  - AllowGroups
-  - DenyUsers
-  - DenyGroups
-  - AcceptEnv
+# SSH options separated by space
+
+sshd_options_separated_by_space:
+  - sshd_allowed_users
+  - sshd_allowed_groups
+  - sshd_denied_users
+  - sshd_denied_groups
+  - sshd_accept_env

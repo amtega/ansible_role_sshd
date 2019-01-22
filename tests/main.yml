@@ -187,17 +187,13 @@
           - stdout is search("AllowGroups root users")
           - stdout is search("DenyUsers acme")
           - stdout is search("DenyGroups acme")
-          - stdout is search("AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME "
-                            + "LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER "
-                            + "LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT "
-                            + "LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS")
+          - stdout is search("AcceptEnv LANG.*")
           - stdout is search("Subsystem sftp /usr/libexec/openssh/sftp-server")
           - stdout is search("Match User acme")
           - stdout is search("  X11Forwarding yes")
           - stdout is search("  PasswordAuthentication no")
         vars:
           stdout: "{{ read_sshd_config_result.stdout }}"
-
   tags:
     - idempotence
 
@@ -208,3 +204,4 @@
       docker_sandbox_state: absent
   tags:
     - sandbox
+    - cleanup

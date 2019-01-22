@@ -1,57 +1,39 @@
 {{ ansible_managed | comment }}
 
-{% macro render_options(options, blank_lines=true) %}
-{% if options is mapping %}
-{% set ssh_options_names = lookup('template', 'options_names.yml') %}
-{% else %}
-{% set ssh_options_names = options %}
-{% endif %}
-{% for o in ssh_options_names %}
-{% if o is none %}
-{% if blank_lines %}
-
-{% endif %}
-{% else %}
-{% if options is mapping %}
-{% set name = sshd_options_map_reverse[o] %}
-{% else %}
-{% set name = o | regex_replace("<.*>", "") %}
-{% endif %}
-{% if options is mapping %}
-{% set value = options[name] %}
-{% else %}
-{% set value = lookup('vars', sshd_options_map[name], default=-1) %}
-{% endif %}
+{% macro render_options(options) %}
+{% for option in options %}
+{% set ansible_option = option.name %}
+{% set sshd_option = sshd_options_map[ansible_option] %}
+{% set value = option.value %}
 {% if value is not sameas true
       and value is not sameas false
       and (value is string
           or (value is number and value >= 0)) %}
-{{ name }} {{ value }}
+{{ sshd_option }} {{ value }}
 {% elif value is sequence %}
-{% if o.startswith("<list_comma>") %}
-{{ name }} {{ value | join(",") }}
-{% elif o.startswith("<list_space>") %}
-{{ name }} {{ value | join(" ") }}
+{% if ansible_option in sshd_options_separated_by_comma %}
+{{ sshd_option }} {{ value | join(",") }}
+{% elif ansible_option in sshd_options_separated_by_space %}
+{{ sshd_option }} {{ value | join(" ") }}
 {% else %}
-{% for i in value %}
-{{ name }} {{ i }}
+{% for item in value %}
+{{ sshd_option }} {{ item }}
 {% endfor %}
 {% endif %}
 {% elif value == true %}
-{{ name }} yes
+{{ sshd_option }} yes
 {% elif value == false %}
-{{ name }} no
-{% endif %}
+{{ sshd_option }} no
 {% endif %}
 {% endfor %}
 {% endmacro %}
-{{ render_options(sshd_options) }}
+{{ render_options(sshd_main_options) }}
 {% for s in sshd_subsystems | default([]) %}
 Subsystem {{ s.name }} {{ s.command }}
 {% endfor %}
 
-{% for r in sshd_match_rules | default([]) | selectattr("state", "equalto", "present") | list %}
-Match {% for c in r.conditions %}{{ c.type }} {{ c.pattern }}
+{% for rule in sshd_match_rules %}
+Match {% for condition in rule.conditions %}{{ condition.type }} {{ condition.pattern }}
 {% endfor %}
-{{ render_options(r.options, blank_lines=false) | indent(width=2, indentfirst=true) }}
+{{ render_options(sshd_rules_options[rule.name]) | indent(width=2, indentfirst=true) }}
 {% endfor %}
