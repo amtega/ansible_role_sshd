@@ -122,7 +122,7 @@
           sshd_password_authentication: no
   tasks:
       - name: read main sshd config file
-        shell: "cat /etc/ssh/sshd_config"
+        command: "cat /etc/ssh/sshd_config"
         changed_when: false
         register: read_sshd_config_result
 
