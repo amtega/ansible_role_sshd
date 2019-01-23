@@ -75,7 +75,6 @@
     sshd_permit_user_environment: no
     sshd_pid_file: /var/run/sshd.pid
     sshd_max_startups: "10:30:100"
-    sshd_conf_d_dir: /etc/ssh/sshd_config.d
     sshd_ciphers:
       - aes256-ctr
       - aes192-ctr
