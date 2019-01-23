@@ -1,6 +1,10 @@
 ---
 # Role variables
 
+# Paths
+
+sshd_conf_d_dir: /etc/ssh/sshd_config.d
+
 # SSH config options
 
 sshd_options_list:

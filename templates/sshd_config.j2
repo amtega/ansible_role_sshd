@@ -9,7 +9,7 @@
       and value is not sameas false
       and (value is string
           or (value is number and value >= 0)) %}
-{{ sshd_option }} {{ value }}
+{{ sshd_option }} {{ value | string }}
 {% elif value is sequence %}
 {% if ansible_option in sshd_options_separated_by_comma %}
 {{ sshd_option }} {{ value | join(",") }}
