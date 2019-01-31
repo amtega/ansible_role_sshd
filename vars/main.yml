@@ -62,7 +62,6 @@ sshd_options_list:
   - sshd_x11_display_offset: X11DisplayOffset
   - sshd_x11_use_local_host: X11UseLocalhost
   - sshd_permit_tty: PermitTTY
-  - sshd_use_login: UseLogin
   - sshd_permit_user_environment: PermitUserEnvironment
   - sshd_chroot_directory: ChrootDirectory
   - sshd_force_command: ForceCommand
