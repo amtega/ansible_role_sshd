@@ -190,3 +190,9 @@ sshd_subsystems:
 # }
 
 sshd_match_rules: []
+
+# Indicate if the sshd service must be reloaded/restart if the changes made on
+# the host require it. This is usefull if you want to delay the reload/restart.
+
+sshd_reload: yes
+sshd_restart: yes
