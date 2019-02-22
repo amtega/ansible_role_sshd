@@ -1,6 +1,6 @@
 {% for rule in sshd_match_rules %}
 {{ rule.name }}:
-{% for key in rule.options.keys() %}
+{% for key in rule.options.keys() | list %}
   - name: {{ key }}
     value: {{ rule.options[key] | to_json }}
 {% endfor %}
