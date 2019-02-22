@@ -1,6 +1,6 @@
 {% for option in sshd_options_list %}
-- name: {{ option.keys().0 }}
-  value: {{ lookup('vars', option.keys().0, default=-1) | to_json }}
+- name: {{ (option.keys() | list)[0] }}
+  value: {{ lookup('vars', (option.keys() | list)[0], default=-1) | to_json }}
 {% else %}
 []
 {% endfor %}

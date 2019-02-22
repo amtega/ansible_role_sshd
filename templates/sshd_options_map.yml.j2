@@ -1,5 +1,5 @@
 {% for option in sshd_options_list %}
-{{ option.keys().0 }}: {{ option.values().0 | to_json }}
+{{ (option.keys() | list)[0] }}: {{ (option.values() | list)[0] | to_json }}
 {% else %}
 {}
 {% endfor %}
