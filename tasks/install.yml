@@ -1,7 +1,7 @@
 ---
 # Install tasks
 
-- name: create directory for sshd include files
+- name: Create directory for sshd include files
   file:
     path: "{{ sshd_conf_d_dir }}"
     state: directory

@@ -2,7 +2,7 @@
 # Role configuration tasks
 
 - block:
-    - name: configure sshd
+    - name: Configure sshd
       template:
         backup: yes
         src: sshd_config.j2
@@ -12,7 +12,7 @@
         mode: "u=rw,g=r,o=r"
       notify: reload sshd
 
-    - name: verify that sshd config is valid
+    - name: Verify that sshd config is valid
       command: /usr/sbin/sshd -t
       register: sshd_test_config_result
       failed_when: sshd_test_config_result.rc != 0

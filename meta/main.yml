@@ -17,6 +17,7 @@ galaxy_info:
       versions:
         - 27
         - 28
+        - 29
   galaxy_tags:
     - system
     - sshd
@@ -24,19 +25,25 @@ galaxy_info:
 
 dependencies:
   - role: amtega.check_platform
-    check_platform_distributions:
-      centos: 6
-      fedora: 27
-      rhel: 6
+    vars:
+      check_platform_distributions:
+        centos: 6
+        fedora: 27
+        rhel: 6
+    tags:
+      - role::sshd
 
   - role: amtega.packages
-    packages_os:
-      centos:
-        all:
-          openssh: present
-      fedora:
-        all:
-          "apache-sshd": present
-      rhel:
-        all:
-          openssh: present
+    vars:
+      packages_os:
+        centos:
+          all:
+            openssh: present
+        fedora:
+          all:
+            "apache-sshd": present
+        rhel:
+          all:
+            openssh: present
+    tags:
+      - role::sshd::install

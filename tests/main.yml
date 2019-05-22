@@ -1,7 +1,7 @@
 ---
 # Tasks for testing role
 
-- name: run idempotence test
+- name: Run idempotence test
   hosts: localhost
   roles:
     - role: amtega.docker_presets
@@ -16,7 +16,7 @@
   tags:
     - sandbox
 
-- name: test sshd role
+- name: Test sshd role
   hosts: docker_sandbox_containers
   roles:
     - amtega.sshd
@@ -120,12 +120,12 @@
           sshd_x11_forwarding: yes
           sshd_password_authentication: no
   tasks:
-      - name: read main sshd config file
+      - name: Read main sshd config file
         command: "cat /etc/ssh/sshd_config"
         changed_when: false
         register: read_sshd_config_result
 
-      - name: verify that sshd_config config matches inventory
+      - name: Verify that sshd_config config matches inventory
         assert:
           that:
           - stdout is search("Protocol 2")
@@ -196,7 +196,7 @@
   tags:
     - idempotence
 
-- name: cleanup docker docker sandbox
+- name: Cleanup docker docker sandbox
   hosts: localhost
   roles:
     - role: amtega.docker_sandbox
