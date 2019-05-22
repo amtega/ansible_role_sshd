@@ -177,7 +177,6 @@
           - stdout is search("X11Forwarding no")
           - stdout is search("X11DisplayOffset 10")
           - stdout is search("X11UseLocalhost yes")
-          - stdout is search("UseLogin no")
           - stdout is search("PermitUserEnvironment no")
           - stdout is search("PidFile /var/run/sshd.pid")
           - stdout is search("MaxStartups 10:30:100")
