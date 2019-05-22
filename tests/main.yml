@@ -1,7 +1,7 @@
 ---
 # Tasks for testing role
 
-- name: run idempotence test
+- name: Run idempotence test
   hosts: localhost
   roles:
     - role: amtega.docker_presets
@@ -9,14 +9,15 @@
         [? starts_with(name, `centos-6`)
            || starts_with(name, `centos-7`)
            || starts_with(name, `fedora-27`)
-           || starts_with(name, `fedora-28`) ]
+           || starts_with(name, `fedora-28`)
+           || starts_with(name, `fedora-29`) ]
 
     - role: amtega.docker_sandbox
       docker_sandbox_state: started
   tags:
     - sandbox
 
-- name: test sshd role
+- name: Test sshd role
   hosts: docker_sandbox_containers
   roles:
     - amtega.sshd
@@ -120,12 +121,12 @@
           sshd_x11_forwarding: yes
           sshd_password_authentication: no
   tasks:
-      - name: read main sshd config file
+      - name: Read main sshd config file
         command: "cat /etc/ssh/sshd_config"
         changed_when: false
         register: read_sshd_config_result
 
-      - name: verify that sshd_config config matches inventory
+      - name: Verify that sshd_config config matches inventory
         assert:
           that:
           - stdout is search("Protocol 2")
@@ -176,7 +177,6 @@
           - stdout is search("X11Forwarding no")
           - stdout is search("X11DisplayOffset 10")
           - stdout is search("X11UseLocalhost yes")
-          - stdout is search("UseLogin no")
           - stdout is search("PermitUserEnvironment no")
           - stdout is search("PidFile /var/run/sshd.pid")
           - stdout is search("MaxStartups 10:30:100")
@@ -196,7 +196,7 @@
   tags:
     - idempotence
 
-- name: cleanup docker docker sandbox
+- name: Cleanup docker docker sandbox
   hosts: localhost
   roles:
     - role: amtega.docker_sandbox

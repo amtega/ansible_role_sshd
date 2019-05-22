@@ -98,7 +98,6 @@ sshd_x11_use_local_host: yes
 # User environment settings
 
 #sshd_permit_tty: yes
-sshd_use_login: no
 sshd_permit_user_environment: no
 #sshd_chroot_directory:
 #sshd_force_command:

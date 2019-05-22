@@ -1,7 +1,7 @@
 ---
 # Handlers
 
-- name: sshd reload
+- name: Sshd reload
   service:
     name: sshd
     state: reloaded
@@ -12,7 +12,7 @@
     - role::sshd
     - role::sshd::service
 
-- name: sshd restart
+- name: Sshd restart
   service:
     name: sshd
     state: restarted

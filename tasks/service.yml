@@ -1,7 +1,7 @@
 ---
 # Role service tasks
 
-- name: start and enable sshd daemon
+- name: Start and enable sshd daemon
   service:
     name: sshd
     enabled: yes
