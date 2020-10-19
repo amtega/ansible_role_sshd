@@ -28,7 +28,7 @@ dependencies:
       check_platform_distributions:
         centos: 6
         fedora: 29
-        rhel: 6
+        redhat: 6
     tags:
       - role::sshd
 
@@ -41,7 +41,7 @@ dependencies:
         fedora:
           all:
             "apache-sshd": present
-        rhel:
+        redhat:
           all:
             openssh: present
     tags:
