@@ -1,0 +1,78 @@
+---
+
+- name: Verify
+  hosts: molecule_hosts
+  gather_facts: no
+  tasks:
+    - name: Read main sshd config file
+      command: "cat /etc/ssh/sshd_config"
+      changed_when: no
+      register: read_sshd_config_result
+
+    - name: Verify that sshd_config config matches inventory
+      assert:
+        that:
+        - stdout is search("Protocol 2")
+        - stdout is search("Port 22")
+        - stdout is search("AddressFamily any")
+        - stdout is search("ListenAddress 0.0.0.0")
+        - stdout is search("ListenAddress ::")
+        - stdout is search("TCPKeepAlive yes")
+        - stdout is search("ClientAliveInterval 0")
+        - stdout is search("ClientAliveCountMax 3")
+        - stdout is search("Compression delayed")
+        - stdout is search("UseDNS no")
+        - stdout is search("Banner /etc/issue.net")
+        - stdout is search("PrintMotd yes")
+        - stdout is search("PrintLastLog yes")
+        - stdout is search("ShowPatchLevel no")
+        - stdout is search("HostKey /etc/ssh/ssh_host_rsa_key")
+        - stdout is search("HostKey /etc/ssh/ssh_host_ecdsa_key")
+        - stdout is search("HostKey /etc/ssh/ssh_host_ed25519_key")
+        - stdout is search("SyslogFacility AUTHPRIV")
+        - stdout is search("LogLevel INFO")
+        - stdout is search("LoginGraceTime 60")
+        - stdout is search("PermitRootLogin yes")
+        - stdout is search("StrictModes yes")
+        - stdout is search("MaxAuthTries 3")
+        - stdout is search("MaxSessions 10")
+        - stdout is search("PubkeyAuthentication yes")
+        - stdout is search("AuthorizedKeysFile .ssh/authorized_keys")
+        - stdout is search("HostbasedAuthentication no")
+        - stdout is search("IgnoreUserKnownHosts no")
+        - stdout is search("IgnoreRhosts yes")
+        - stdout is search("PermitEmptyPasswords no")
+        - stdout is search("PasswordAuthentication yes")
+        - stdout is search("ChallengeResponseAuthentication no")
+        - stdout is search("KerberosAuthentication no")
+        - stdout is search("KerberosOrLocalPasswd yes")
+        - stdout is search("KerberosTicketCleanup yes")
+        - stdout is search("KerberosUseKuserok yes")
+        - stdout is search("GSSAPIAuthentication yes")
+        - stdout is search("GSSAPICleanupCredentials no")
+        - stdout is search("GSSAPIStrictAcceptorCheck yes")
+        - stdout is search("GSSAPIKeyExchange no")
+        - stdout is search("UsePAM yes")
+        - stdout is search("AllowAgentForwarding yes")
+        - stdout is search("AllowTcpForwarding no")
+        - stdout is search("GatewayPorts no")
+        - stdout is search("PermitTunnel no")
+        - stdout is search("X11Forwarding no")
+        - stdout is search("X11DisplayOffset 10")
+        - stdout is search("X11UseLocalhost yes")
+        - stdout is search("PermitUserEnvironment no")
+        - stdout is search("PidFile /var/run/sshd.pid")
+        - stdout is search("MaxStartups 10:30:100")
+        - stdout is search("Ciphers aes256-ctr,aes192-ctr,aes128-ctr")
+        - stdout is search("MACs hmac-sha2-512,hmac-sha2-256")
+        - stdout is search("AllowUsers root")
+        - stdout is search("AllowGroups root users")
+        - stdout is search("DenyUsers acme")
+        - stdout is search("DenyGroups acme")
+        - stdout is search("AcceptEnv LANG.*")
+        - stdout is search("Subsystem sftp /usr/libexec/openssh/sftp-server")
+        - stdout is search("Match User acme")
+        - stdout is search("  X11Forwarding yes")
+        - stdout is search("  PasswordAuthentication no")
+      vars:
+        stdout: "{{ read_sshd_config_result.stdout }}"
