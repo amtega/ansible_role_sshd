@@ -35,7 +35,6 @@
     sshd_banner: /etc/issue.net
     sshd_print_motd: yes
     sshd_print_last_log: yes
-    sshd_show_patch_level: no
     sshd_hostkey_files:
       - /etc/ssh/ssh_host_rsa_key
       - /etc/ssh/ssh_host_ecdsa_key

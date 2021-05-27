@@ -29,7 +29,6 @@ sshd_banner: /etc/issue.net
 sshd_print_motd: yes
 sshd_print_last_log: yes
 #sshd_version_addendum:
-sshd_show_patch_level: no
 
 # List of host key files
 
