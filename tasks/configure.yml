@@ -12,11 +12,19 @@
         mode: "u=rw,g=r,o=r"
       notify: reload sshd
 
+    - name: Gather service facts
+      service_facts:
+
     - name: Verify that sshd config is valid
       command: /usr/sbin/sshd -t
       register: sshd_test_config_result
       failed_when: sshd_test_config_result.rc != 0
-      changed_when: false
+      changed_when: no
+      when: >-
+        ansible_facts.services["sshd.service"]["state"]
+        | default("") == "running"
+        or ansible_facts.services["sshd"]["state"]
+           | default("") == "running"
   tags:
     - role::sshd
     - role::sshd::configure
