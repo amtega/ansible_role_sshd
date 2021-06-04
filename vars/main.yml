@@ -23,7 +23,6 @@ sshd_options_list:
   - sshd_print_motd: PrintMotd
   - sshd_print_last_log: PrintLastLog
   - sshd_version_addendum: VersionAddendum
-  - sshd_show_patch_level: ShowPatchLevel
   - sshd_hostkey_files: HostKey
   - sshd_syslog_facility: SyslogFacility
   - sshd_log_level_type: LogLevel
