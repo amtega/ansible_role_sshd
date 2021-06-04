@@ -14,6 +14,7 @@ lint: "${MOLECULE_SCENARIO_DIRECTORY}/linters.sh"
 platforms:
   - name: "centos6-${INSTANCE_UUID:-1}"
     image: centos:6
+    dockerfile: Dockerfile.centos6.j2
     command: /sbin/init
     tmpfs:
       - /run
@@ -26,6 +27,7 @@ platforms:
       - molecule_hosts_centos_6
   - name: "centos7-${INSTANCE_UUID:-1}"
     image: centos:7
+    dockerfile: Dockerfile.systemd.j2
     command: /sbin/init
     tmpfs:
       - /run
@@ -38,6 +40,7 @@ platforms:
       - molecule_hosts_centos_7
   - name: "centos8-${INSTANCE_UUID:-1}"
     image: centos:8
+    dockerfile: Dockerfile.systemd.j2
     command: /sbin/init
     tmpfs:
       - /run
@@ -50,6 +53,7 @@ platforms:
       - molecule_hosts_centos_8
   - name: "fedora33-${INSTANCE_UUID:-1}"
     image: fedora:33
+    dockerfile: Dockerfile.systemd.j2
     command: /sbin/init
     tmpfs:
       - /run
@@ -62,6 +66,7 @@ platforms:
       - molecule_hosts_fedora_33
   - name: "fedora34-${INSTANCE_UUID:-1}"
     image: fedora:34
+    dockerfile: Dockerfile.systemd.j2
     command: /sbin/init
     tmpfs:
       - /run
@@ -76,7 +81,7 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      callback_whitelist: profile_tasks
+      callback_enabled: profile_tasks
       action_plugins: $PWD/action_plugins
   inventory:
     hosts:

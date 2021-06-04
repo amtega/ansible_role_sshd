@@ -31,20 +31,14 @@ dependencies:
         centos: 6
         fedora: 33
         redhat: 6
-    tags:
-      - role::sshd
 
   - role: amtega.packages
     vars:
       packages_os:
-        centos:
+        all:
           all:
             openssh: present
+            openssh-server: present
         fedora:
           all:
             "apache-sshd": present
-        redhat:
-          all:
-            openssh: present
-    tags:
-      - role::sshd::install
