@@ -7,7 +7,7 @@
     state: reloaded
   listen:
     - reload sshd
-  when: sshd_reload
+  when: sshd_reload | bool
   tags:
     - role::sshd
     - role::sshd::service
@@ -16,7 +16,7 @@
   service:
     name: sshd
     state: restarted
-  when: sshd_restart
+  when: sshd_restart | bool
   listen:
     - restart sshd
   tags:
