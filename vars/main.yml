@@ -73,15 +73,6 @@ sshd_options_list:
   - sshd_denied_groups: DenyGroups
   - sshd_accept_env: AcceptEnv
 
-sshd_options_map: >-
-  {{ lookup('template', 'sshd_options_map.yml.j2') | from_yaml }}
-
-sshd_main_options: >-
-  {{ lookup('template', 'sshd_main_options.yml.j2') | from_yaml }}
-
-sshd_rules_options: >-
-  {{ lookup('template', 'sshd_rules_options.yml.j2') | from_yaml }}
-
 # SSH options separated by comma
 
 sshd_options_separated_by_comma:
