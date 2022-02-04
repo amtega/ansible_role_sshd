@@ -2,6 +2,17 @@
 # Role configuration tasks
 
 - block:
+    - name: Gather options facts
+      set_fact:
+        _sshd_options_map: >-
+          {{ lookup('template', 'sshd_options_map.yml.j2') | from_yaml }}
+
+        _sshd_main_options: >-
+          {{ lookup('template', 'sshd_main_options.yml.j2') | from_yaml }}
+
+        _sshd_rules_options: >-
+          {{ lookup('template', 'sshd_rules_options.yml.j2') | from_yaml }}
+
     - name: Configure sshd
       template:
         backup: yes
