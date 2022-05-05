@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2022-05-05
+### Changed
+- Restricted sshd_config permissions. Related to ansible/playbooks/linux#91
+- Changed molecule engine to podman.
+
 ## [1.7.0] - 2022-01-26
 ### Changed
 - Improved perFormance.
 - Fixed supported distros. Related to ansible/main#178
-
 
 ## [1.6.1] - 2022-01-26
 ### Changed
