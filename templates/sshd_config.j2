@@ -35,5 +35,5 @@ Subsystem {{ s.name }} {{ s.command }}
 {% for rule in sshd_match_rules %}
 Match {% for condition in rule.conditions %}{{ condition.type }} {{ condition.pattern }}
 {% endfor %}
-{{ render_options(_sshd_rules_options[rule.name]) | indent(width=2, indentfirst=true) }}
+{{ render_options(_sshd_rules_options[rule.name]) | indent(width=2, first=true) }}
 {% endfor %}
