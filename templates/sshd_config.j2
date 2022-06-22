@@ -10,7 +10,7 @@
       and (value is string
           or (value is number and value >= 0)) %}
 {{ sshd_option }} {{ value | string }}
-{% elif value is sequence %}
+{% elif value is sequence and value | length > 0 %}
 {% if ansible_option in sshd_options_separated_by_comma %}
 {{ sshd_option }} {{ value | join(",") }}
 {% elif ansible_option in sshd_options_separated_by_space %}
