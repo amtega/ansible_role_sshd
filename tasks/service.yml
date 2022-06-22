@@ -1,8 +1,7 @@
 ---
-# Role service tasks
 
 - name: Start and enable sshd daemon
-  service:
+  ansible.builtin.service:
     name: sshd
     enabled: yes
     state: started
