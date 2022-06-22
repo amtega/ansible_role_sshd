@@ -1,9 +1,10 @@
 ---
 # Role configuration tasks
 
-- block:
+- name: Configure sshd
+  block:
     - name: Gather options facts
-      set_fact:
+      ansible.builtin.set_fact:
         _sshd_options_map: >-
           {{ lookup('template', 'sshd_options_map.yml.j2') | from_yaml }}
 
@@ -14,7 +15,7 @@
           {{ lookup('template', 'sshd_rules_options.yml.j2') | from_yaml }}
 
     - name: Configure sshd
-      template:
+      ansible.builtin.template:
         backup: yes
         src: sshd_config.j2
         dest: /etc/ssh/sshd_config
@@ -24,10 +25,10 @@
       notify: reload sshd
 
     - name: Gather service facts
-      service_facts:
+      ansible.builtin.service_facts:
 
     - name: Verify that sshd config is valid
-      command: /usr/sbin/sshd -t
+      ansible.builtin.command: /usr/sbin/sshd -t
       register: sshd_test_config_result
       failed_when: sshd_test_config_result.rc != 0
       changed_when: no
