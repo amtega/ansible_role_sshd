@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.9.1] - 2022-06-22
 ### Fixed
+- Coding standards.
+
+## [1.9.1] - 2022-06-22
+### Fixed
 - Fixed empty list configuration items.
 
 ## [1.9.0] - 2022-06-16

@@ -5,12 +5,12 @@
   gather_facts: no
   tasks:
     - name: Read main sshd config file
-      command: "cat /etc/ssh/sshd_config"
+      ansible.builtin.command: "cat /etc/ssh/sshd_config"
       changed_when: no
       register: read_sshd_config_result
 
     - name: Verify that sshd_config config matches inventory
-      assert:
+      ansible.builtin.assert:
         that:
           - stdout is search("Protocol 2")
           - stdout is search("Port 22")

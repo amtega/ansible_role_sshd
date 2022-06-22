@@ -1,20 +1,19 @@
 ---
-# Role tasks
 
 - name: Install sshd daemon
-  import_tasks: install.yml
+  ansible.builtin.import_tasks: install.yml
   tags:
     - role::sshd
     - role::sshd::install
 
 - name: Configure sshd daemon
-  import_tasks: configure.yml
+  ansible.builtin.import_tasks: configure.yml
   tags:
     - role::sshd
     - role::sshd::configure
 
 - name: Setup sshd service
-  import_tasks: service.yml
+  ansible.builtin.import_tasks: service.yml
   tags:
     - role::sshd
     - role::sshd:service
