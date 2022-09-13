@@ -1,5 +1,4 @@
 ---
-# Role configuration tasks
 
 - name: Configure sshd
   block:
