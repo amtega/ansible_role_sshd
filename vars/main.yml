@@ -39,18 +39,20 @@ sshd_options_list:
   - sshd_host_based_authentication: HostbasedAuthentication
   - sshd_ignore_known_hosts: IgnoreUserKnownHosts
   - sshd_ignore_rhosts_file: IgnoreRhosts
-  - sshd_permit_empty_passwords: PermitEmptyPasswords
-  - sshd_password_authentication: PasswordAuthentication
+  - sshd_permit_empty_passwords: PermitEmptyPasswords # pragma: allowlist secret
+  - sshd_password_authentication: >-                  # pragma: allowlist secret
+      PasswordAuthentication
   - sshd_challenge_response_authentication: ChallengeResponseAuthentication
   - sshd_kerberos_authentication: KerberosAuthentication
-  - sshd_kerberos_or_local_passwd: KerberosOrLocalPasswd
+  - sshd_kerberos_or_local_passwd: >-                 # pragma: allowlist secret
+      KerberosOrLocalPasswd
   - sshd_kerberos_ticket_cleanup: KerberosTicketCleanup
   - sshd_kerberos_get_afs_token: KerberosGetAFSToken
   - sshd_kerberos_use_k_user_ok: KerberosUseKuserok
   - sshd_gssapi_authentication: GSSAPIAuthentication
   - sshd_gssapi_cleanup_credentials: GSSAPICleanupCredentials
   - sshd_gssapi_strict_accept_or_check: GSSAPIStrictAcceptorCheck
-  - sshd_gssapi_key_exchange: GSSAPIKeyExchange
+  - sshd_gssapi_key_exchange: GSSAPIKeyExchange       # pragma: allowlist secret
   - sshd_gssapi_enable_k5_users: GSSAPIEnablek5users
   - sshd_use_pam: UsePAM
   - sshd_allow_agent_forwarding: AllowAgentForwarding
